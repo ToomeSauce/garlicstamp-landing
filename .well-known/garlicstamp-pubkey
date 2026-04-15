@@ -1,7 +1,6 @@
 {
   "algorithm": "Ed25519",
-  "public_key": "PLACEHOLDER — see alphagarage.io/api/garage/garlicstamp-pubkey for the live key",
+  "public_key": "mARn3cGlxWB6yhboCa7dd6plmdEb4RjMKVFZUg1GSP0=",
   "key_id": "garage-prod-2026-04",
-  "issuer": "alpha-garage",
-  "note": "This is a placeholder. The canonical public key is served from the Alpha Garage API."
+  "issuer": "alpha-garage"
 }
