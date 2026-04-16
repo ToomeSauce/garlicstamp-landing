@@ -1,0 +1,6 @@
+{
+  "issuer": "alphagarage.io",
+  "public_key": "mARn3cGlxWB6yhboCa7dd6plmdEb4RjMKVFZUg1GSP0=",
+  "algorithm": "Ed25519",
+  "spec_url": "https://garlicstamp.com/spec"
+}
