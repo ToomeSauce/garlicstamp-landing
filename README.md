@@ -26,11 +26,24 @@ npx wrangler pages deploy . --project-name=garlicstamp
 ## Structure
 
 ```
-index.html   — main landing page
-404.html     — custom 404 page
-_headers     — security headers
-_redirects   — URL redirects
+index.html                — main landing page
+docs.html                 — developer docs for v0.6 portable credentials
+spec.html                 — protocol specification page
+scripts/verify_docs_live.py — executable docs/live API smoke test
+404.html                  — custom 404 page
+_headers                  — security headers
+_redirects                — URL redirects
 ```
+
+## Verification
+
+Before publishing docs changes, run:
+
+```bash
+python scripts/verify_docs_live.py --docs docs.html --agent TheGoat
+```
+
+The smoke test checks the canonical Alpha Garage credential, a tampered credential, a missing-data credential, and the required-field contract advertised on `/docs` against the live `/api/garage/garlicstamp/spec` response.
 
 ## Tech
 
