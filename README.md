@@ -29,6 +29,9 @@ npx wrangler pages deploy . --project-name=garlicstamp
 index.html                — main landing page
 docs.html                 — developer docs for v0.6 portable credentials
 spec.html                 — protocol specification page
+reference/python/         — Python reference verifier + executable example
+reference/js/             — JavaScript/Node reference verifier + executable example
+reference/README.md       — reference-library usage and failure modes
 scripts/verify_docs_live.py — executable docs/live API smoke test
 404.html                  — custom 404 page
 _headers                  — security headers
@@ -40,6 +43,7 @@ _redirects                — URL redirects
 Before publishing docs changes, run:
 
 ```bash
+pytest tests/test_reference_libraries.py -q
 python scripts/verify_docs_live.py --docs docs.html --agent TheGoat
 ```
 

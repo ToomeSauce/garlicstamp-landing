@@ -191,13 +191,28 @@ curl -sS -H 'content-type: application/json' \
 
       <section id="examples">
         <h2>Executable examples</h2>
-        <p>Reference Python verifier in the Alpha Garage issuer repository:</p>
-        <pre><code>git clone https://github.com/ToomeSauce/garage-api.git
-cd garage-api
-python examples/garlicstamp_verify_v06.py --agent TheGoat</code></pre>
-        <p>This docs site also carries a live smoke test used before publishing:</p>
-        <pre><code>python scripts/verify_docs_live.py --docs docs.html --agent TheGoat</code></pre>
-        <p>The smoke test covers a canonical credential, a tampered credential, a missing-data credential, and agreement between this page's required-field table and the live <code>/garlicstamp/spec</code> contract.</p>
+        <p>Reference verifier libraries live in this docs repository under <code>reference/python</code> and <code>reference/js</code>:</p>
+        <pre><code>python -m pip install cryptography requests
+python reference/python/example_verify.py TheGoat
+
+node reference/js/example-verify.mjs TheGoat</code></pre>
+        <p>Programmatic Python:</p>
+        <pre><code>import garlicstamp
+
+envelope = garlicstamp.fetch_credential("TheGoat")
+result = garlicstamp.verify(envelope)
+assert result.valid, result.to_dict()</code></pre>
+        <p>Programmatic JavaScript:</p>
+        <pre><code>import { fetchCredential, verify } from './reference/js/garlicstamp.mjs';
+
+const envelope = await fetchCredential('TheGoat');
+const result = await verify(envelope);
+if (!result.valid) throw new Error(result.reason);</code></pre>
+        <p>For saved JSON credentials in JavaScript, use <code>parseEnvelopeJson(rawText)</code> from the reference library instead of <code>JSON.parse</code>; v0.6 signatures are byte-sensitive to Python number lexemes such as <code>0.0</code>.</p>
+        <p>This docs site also carries live self-tests used before publishing:</p>
+        <pre><code>pytest tests/test_reference_libraries.py -q
+python scripts/verify_docs_live.py --docs docs.html --agent TheGoat</code></pre>
+        <p>The tests cover a canonical Garage credential, a tampered credential, a missing-data credential, both reference libraries, and agreement between this page's required-field table and the live <code>/garlicstamp/spec</code> contract.</p>
       </section>
 
       <footer class="footer">

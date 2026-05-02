@@ -3,8 +3,7 @@
 
 Checks that the static docs' required-field table agrees with the live
 Alpha Garage GarlicStamp v0.6 response shape and hosted verifier behavior.
-Uses only the Python standard library so third-party developers can run it
-without project setup.
+Uses `requests` so the smoke path matches normal third-party integrations.
 """
 
 from __future__ import annotations
@@ -13,7 +12,7 @@ import argparse
 import copy
 import json
 import sys
-import urllib.request
+import requests
 from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any
@@ -32,29 +31,29 @@ class RequiredFieldParser(HTMLParser):
 
 
 def get_json(url: str) -> dict[str, Any]:
-    req = urllib.request.Request(
+    resp = requests.get(
         url,
         headers={"accept": "application/json", "user-agent": "garlicstamp-docs-smoke/1.0"},
+        timeout=30,
     )
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        if resp.status != 200:
-            raise AssertionError(f"GET {url} returned {resp.status}")
-        return json.loads(resp.read().decode("utf-8"))
+    if resp.status_code != 200:
+        raise AssertionError(f"GET {url} returned {resp.status_code}: {resp.text[:200]}")
+    return resp.json()
 
 
 def post_json(url: str, body: dict[str, Any]) -> dict[str, Any]:
-    req = urllib.request.Request(
+    resp = requests.post(
         url,
-        data=json.dumps(body).encode("utf-8"),
+        json=body,
         headers={
-            "content-type": "application/json",
             "accept": "application/json",
             "user-agent": "garlicstamp-docs-smoke/1.0",
         },
-        method="POST",
+        timeout=30,
     )
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        return json.loads(resp.read().decode("utf-8"))
+    if resp.status_code != 200:
+        raise AssertionError(f"POST {url} returned {resp.status_code}: {resp.text[:200]}")
+    return resp.json()
 
 
 def dotted_get(payload: dict[str, Any], path: str) -> Any:
