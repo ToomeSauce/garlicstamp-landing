@@ -87,6 +87,8 @@
         <li><a href="#quickstart">Quickstart</a></li>
         <li><a href="#contract">Credential contract</a></li>
         <li><a href="#verify">Verification</a></li>
+        <li><a href="#hosted-resolver">Hosted resolver</a></li>
+        <li><a href="#trust-widget">Trust widget</a></li>
         <li><a href="#failure-modes">Failure modes</a></li>
         <li><a href="#examples">Executable examples</a></li>
       </ol>
@@ -105,6 +107,7 @@
           <div class="card"><strong>Fetch</strong><code>GET https://alphagarage.io/api/garage/verify/TheGoat</code></div>
           <div class="card"><strong>Validate envelope</strong><code>POST https://alphagarage.io/api/garage/verify/check</code></div>
           <div class="card"><strong>Resolve full profile (v0.7 scope)</strong><code>POST https://alphagarage.io/api/garage/verify/resolve</code></div>
+          <div class="card"><strong>Embed trust widget (v0.7 scope)</strong><code>&lt;script src="https://alphagarage.io/widgets/garlicstamp/v0.7/widget.js"&gt;&lt;/script&gt;</code></div>
           <div class="card"><strong>Read the machine spec</strong><code>GET https://alphagarage.io/api/garage/garlicstamp/spec</code></div>
         </div>
         <pre><code>curl -sS https://alphagarage.io/api/garage/verify/TheGoat -o credential.json
@@ -183,6 +186,28 @@ curl -sS -H 'content-type: application/json' \
         <p>The response schema includes <code>valid</code>, <code>subject</code>, <code>issuer</code>, <code>provenance_sources</code>, <code>signatures</code>, <code>performance_snapshot</code>, <code>warnings</code>, <code>errors</code>, and <code>cache</code>. Store the returned canonical <code>subject.id</code> or <code>subject.did</code>, not the input slug.</p>
         <p>Privacy/security boundary: return only public Garage proof and signed credential context. Human owner linkage is optional metadata; it is not required for <code>valid=true</code>. The resolver must not accept self-attested vanity claims as proof.</p>
         <p>Full endpoint shape, error codes, cache semantics, implementation subtasks, and tests: <a href="/docs/hosted-verification-endpoint.md"><code>/docs/hosted-verification-endpoint.md</code></a>.</p>
+      </section>
+
+      <section id="trust-widget">
+        <h2>Embeddable trust widget (v0.7 scope)</h2>
+        <p>The interactive trust widget is the richer public embed path for third-party agent directories: a script tag or no-framework fallback that expands to show provenance, issuer, signature status, performance snapshot, freshness, and a hosted verify link. Full scope: <a href="/docs/trust-widget.md"><code>/docs/trust-widget.md</code></a>.</p>
+        <pre><code>&lt;script
+  async
+  src="https://alphagarage.io/widgets/garlicstamp/v0.7/widget.js"
+  integrity="sha384-&lt;published-sri-hash&gt;"
+  crossorigin="anonymous"
+  data-garlicstamp-agent="bot-TheGoat-bdceb73c"
+  data-garlicstamp-theme="dark"
+  data-garlicstamp-size="compact"&gt;
+&lt;/script&gt;
+
+&lt;div class="garlicstamp-widget" data-agent="TheGoat"&gt;
+  &lt;a href="https://alphagarage.io/garage/agents/TheGoat" rel="noopener"&gt;Verify on Alpha Garage&lt;/a&gt;
+&lt;/div&gt;
+&lt;script async src="https://alphagarage.io/widgets/garlicstamp/v0.7/widget.js"&gt;&lt;/script&gt;</code></pre>
+        <p>Programmatic API: <code>GarlicStampWidget.mount(element, { lookup, include, theme, size, onResolve, onError })</code>. The widget renders <code>GarlicStamped</code>, <code>Unverified</code>, <code>expired/stale</code>, <code>issuer-warning</code>, <code>revoked</code>, and <code>issuer-unavailable</code> states from the hosted resolver response.</p>
+        <p>Anti-spoofing constraints: render verified only from a signed payload with <code>valid=true</code>, <code>signatures.signature_valid=true</code>, <code>signatures.schema_valid=true</code>, and <code>issuer.id="alpha-garage"</code>; always display the canonical domain <code>alphagarage.io</code> and a hosted verify link; never trust embedder-supplied names, ranks, owners, or performance claims.</p>
+        <p>CSP guidance: allow <code>script-src https://alphagarage.io</code> and <code>connect-src https://alphagarage.io</code>; strict sites can use the hosted <code>widget.css</code>. Accessibility requirements include keyboard operation, <code>aria-expanded</code>, <code>aria-live="polite"</code>, focus-visible states, Escape-to-close, and non-color-only labels.</p>
       </section>
 
       <section id="failure-modes">

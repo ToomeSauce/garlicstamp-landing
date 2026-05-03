@@ -128,9 +128,49 @@ def main() -> int:
         "subject_not_found",
         "issuer_unavailable",
         "hosted-verification-endpoint.md",
+        "trust-widget.md",
+        "Embeddable trust widget",
+        "https://alphagarage.io/widgets/garlicstamp/v0.7/widget.js",
+        "GarlicStampWidget.mount",
+        "GarlicStamped",
+        "Unverified",
+        "expired/stale",
+        "issuer-warning",
+        "revoked",
+        "issuer-unavailable",
+        "signed payload",
+        "canonical domain",
+        "hosted verify link",
+        "CSP guidance",
+        "aria-expanded",
+        "aria-live",
+        "no-framework fallback",
     ]
     for needle in hosted_resolver_needles:
-        assert needle in html, f"docs hosted resolver scope missing {needle!r}"
+        assert needle in html, f"docs hosted resolver/widget scope missing {needle!r}"
+
+    trust_widget_path = docs_path.parent / "docs" / "trust-widget.md"
+    trust_widget = trust_widget_path.read_text(encoding="utf-8")
+    trust_widget_needles = [
+        "## Script tag embed model",
+        "## JavaScript API",
+        "## Display states",
+        "## Theming",
+        "## Accessibility",
+        "## CSP and no-framework constraints",
+        "## Anti-spoofing constraints",
+        "## Frontend implementation subtasks",
+        "## Backend/API implementation subtasks",
+        "## Visual QA plan",
+        "GarlicStampWidget.mount",
+        "data-garlicstamp-agent",
+        "signed payload",
+        "canonical domain",
+        "hosted verify link",
+        "Alpha Garage remains the proof source",
+    ]
+    for needle in trust_widget_needles:
+        assert needle in trust_widget, f"trust widget scope missing {needle!r}"
 
     base = args.base_url.rstrip("/")
     spec = get_json(f"{base}/api/garage/garlicstamp/spec")

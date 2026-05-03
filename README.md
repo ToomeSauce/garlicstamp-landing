@@ -29,6 +29,7 @@ npx wrangler pages deploy . --project-name=garlicstamp
 index.html                — main landing page
 docs.html                 — developer docs for v0.6 portable credentials
 docs/hosted-verification-endpoint.md — v0.7 hosted full-profile resolver scope
+docs/trust-widget.md      — v0.7 interactive trust widget scope
 spec.html                 — protocol specification page
 reference/python/         — Python reference verifier + executable example
 reference/js/             — JavaScript/Node reference verifier + executable example
@@ -49,7 +50,7 @@ python scripts/verify_docs_live.py --docs docs.html --agent TheGoat
 python scripts/verify_developers_page.py --page developers.html --page developers/index.html --agent TheGoat
 ```
 
-The smoke test checks the canonical Alpha Garage credential, a tampered credential, a missing-data credential, and the required-field contract advertised on `/docs` against the live `/api/garage/garlicstamp/spec` response.
+The smoke tests check the canonical Alpha Garage credential, a tampered credential, a missing-data credential, the required-field contract advertised on `/docs`, and the public discovery path for the hosted resolver plus interactive trust widget scope against the live `/api/garage/garlicstamp/spec` response.
 
 ## Tech
 
