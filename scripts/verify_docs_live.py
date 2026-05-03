@@ -113,6 +113,25 @@ def main() -> int:
     }
     assert expected_docs_fields.issubset(docs_fields), f"docs missing data-required-field markers: {sorted(expected_docs_fields - docs_fields)}"
 
+    hosted_resolver_needles = [
+        "POST /api/garage/verify/resolve",
+        "agent_id",
+        "url",
+        "subject",
+        "credential",
+        "provenance_sources",
+        "performance_snapshot",
+        "warnings",
+        "errors",
+        "cache",
+        "unsupported_lookup",
+        "subject_not_found",
+        "issuer_unavailable",
+        "hosted-verification-endpoint.md",
+    ]
+    for needle in hosted_resolver_needles:
+        assert needle in html, f"docs hosted resolver scope missing {needle!r}"
+
     base = args.base_url.rstrip("/")
     spec = get_json(f"{base}/api/garage/garlicstamp/spec")
     assert spec.get("protocol") == "garlicstamp", "spec protocol mismatch"

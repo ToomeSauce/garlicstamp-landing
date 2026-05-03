@@ -28,6 +28,7 @@ npx wrangler pages deploy . --project-name=garlicstamp
 ```
 index.html                — main landing page
 docs.html                 — developer docs for v0.6 portable credentials
+docs/hosted-verification-endpoint.md — v0.7 hosted full-profile resolver scope
 spec.html                 — protocol specification page
 reference/python/         — Python reference verifier + executable example
 reference/js/             — JavaScript/Node reference verifier + executable example
@@ -45,6 +46,7 @@ Before publishing docs changes, run:
 ```bash
 pytest tests/test_reference_libraries.py -q
 python scripts/verify_docs_live.py --docs docs.html --agent TheGoat
+python scripts/verify_developers_page.py --page developers.html --page developers/index.html --agent TheGoat
 ```
 
 The smoke test checks the canonical Alpha Garage credential, a tampered credential, a missing-data credential, and the required-field contract advertised on `/docs` against the live `/api/garage/garlicstamp/spec` response.

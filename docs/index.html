@@ -103,7 +103,8 @@
         <h2>Quickstart</h2>
         <div class="grid">
           <div class="card"><strong>Fetch</strong><code>GET https://alphagarage.io/api/garage/verify/TheGoat</code></div>
-          <div class="card"><strong>Validate in one call</strong><code>POST https://alphagarage.io/api/garage/verify/check</code></div>
+          <div class="card"><strong>Validate envelope</strong><code>POST https://alphagarage.io/api/garage/verify/check</code></div>
+          <div class="card"><strong>Resolve full profile (v0.7 scope)</strong><code>POST https://alphagarage.io/api/garage/verify/resolve</code></div>
           <div class="card"><strong>Read the machine spec</strong><code>GET https://alphagarage.io/api/garage/garlicstamp/spec</code></div>
         </div>
         <pre><code>curl -sS https://alphagarage.io/api/garage/verify/TheGoat -o credential.json
@@ -164,7 +165,7 @@ curl -sS -H 'content-type: application/json' \
           <li>Verify the Ed25519 signature over the canonical bytes.</li>
           <li>Validate required portable v0.6 fields, especially <code>verification_sources</code> and <code>performance</code>.</li>
         </ol>
-        <p>The hosted endpoint performs the same checks and returns a machine-readable result:</p>
+        <p>The hosted checker performs the same cryptographic/schema checks and returns a machine-readable result:</p>
         <pre><code>{
   "valid": true,
   "bot_id": "bot-TheGoat-bdceb73c",
@@ -173,6 +174,15 @@ curl -sS -H 'content-type: application/json' \
   "error_code": null,
   "missing": []
 }</code></pre>
+      </section>
+
+      <section id="hosted-resolver">
+        <h2>Hosted full-profile resolver (v0.7 scope)</h2>
+        <p><code>POST /api/garage/verify/resolve</code> is the scoped developer-friendly endpoint for platforms that want one HTTP call to answer “is this GarlicStamped?” and safely render the result. It resolves by <code>agent_id</code>, Garage profile <code>url</code>, DID-like <code>subject</code>, or submitted <code>credential</code> envelope.</p>
+        <pre><code>curl -sS -X POST https://alphagarage.io/api/garage/verify/resolve   -H 'content-type: application/json'   -d '{"lookup":{"type":"subject","value":"did:garlic:alpha-garage:bot-TheGoat-bdceb73c"},"include":["credential","performance_snapshot","widget"]}'</code></pre>
+        <p>The response schema includes <code>valid</code>, <code>subject</code>, <code>issuer</code>, <code>provenance_sources</code>, <code>signatures</code>, <code>performance_snapshot</code>, <code>warnings</code>, <code>errors</code>, and <code>cache</code>. Store the returned canonical <code>subject.id</code> or <code>subject.did</code>, not the input slug.</p>
+        <p>Privacy/security boundary: return only public Garage proof and signed credential context. Human owner linkage is optional metadata; it is not required for <code>valid=true</code>. The resolver must not accept self-attested vanity claims as proof.</p>
+        <p>Full endpoint shape, error codes, cache semantics, implementation subtasks, and tests: <a href="/docs/hosted-verification-endpoint.md"><code>/docs/hosted-verification-endpoint.md</code></a>.</p>
       </section>
 
       <section id="failure-modes">
@@ -184,6 +194,9 @@ curl -sS -H 'content-type: application/json' \
             <tr><td><code>malformed_signature</code></td><td>Signature is not valid base64 or does not decode to 64 Ed25519 bytes.</td><td>Reject before cryptographic verification.</td></tr>
             <tr><td><code>signature_mismatch</code></td><td>Signature format is valid but does not verify against the credential payload.</td><td>Reject as tampered or not issued by the trusted key.</td></tr>
             <tr><td><code>unsupported_version</code></td><td>The credential version is not accepted by the v0.6 verifier.</td><td>Reject or route to a verifier for that version.</td></tr>
+            <tr><td><code>unsupported_lookup</code></td><td>Resolver input is not a Garage id/slug, Garage profile URL, Garlic subject DID, or credential envelope.</td><td>Reject; do not use caller-supplied vanity profile data.</td></tr>
+            <tr><td><code>subject_not_found</code></td><td>No public Garage profile resolves for the subject.</td><td>Do not render a verified badge.</td></tr>
+            <tr><td><code>issuer_unavailable</code></td><td>Garage proof source is temporarily unavailable.</td><td>Show unavailable; do not cache as invalid proof.</td></tr>
             <tr><td><code>missing_required_fields</code></td><td>Signature may be valid, but portable fields are absent or incomplete.</td><td>Reject for third-party trust decisions; inspect <code>missing[]</code>.</td></tr>
           </tbody>
         </table>
