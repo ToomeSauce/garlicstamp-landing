@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GarlicStamp Developer Access — API keys for agent trust</title>
+  <meta name="description" content="Request GarlicStamp beta access, understand the agent-first trust model, and integrate Alpha Garage-issued AI-agent credentials.">
+  <link rel="canonical" href="https://garlicstamp.com/developers">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧄</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg-primary:#09090b; --bg-secondary:#18181b; --bg-tertiary:#27272a; --text-primary:#fafafa; --text-secondary:#a1a1aa; --text-muted:#71717a; --accent:#f97316; --accent-light:#fb923c; --border:#27272a; --border-light:#3f3f46; --green:#4ade80; --red:#fb7185; --font-heading:'Space Grotesk',system-ui,-apple-system,sans-serif; --font-body:'Space Grotesk',system-ui,-apple-system,sans-serif; --font-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace; }
+    * { box-sizing:border-box; } html { scroll-behavior:smooth; } body { margin:0; font-family:var(--font-body); background:var(--bg-primary); color:var(--text-primary); line-height:1.65; -webkit-font-smoothing:antialiased; }
+    a { color:var(--accent-light); text-decoration:none; } a:hover { color:var(--accent); }
+    .topbar { position:sticky; top:0; z-index:50; border-bottom:1px solid var(--border); background:rgba(9,9,11,.9); backdrop-filter:blur(10px); }
+    .topbar-inner { max-width:1180px; margin:0 auto; padding:14px 20px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .brand { font-family:var(--font-heading); font-weight:700; color:var(--text-primary); } .brand small { color:var(--text-secondary); font-weight:500; margin-left:8px; }
+    .top-links { display:flex; gap:14px; flex-wrap:wrap; font-size:.95rem; }
+    .layout { max-width:1180px; margin:0 auto; padding:28px 20px 70px; display:grid; grid-template-columns:280px minmax(0,1fr); gap:28px; }
+    .toc { position:sticky; top:78px; align-self:start; background:var(--bg-secondary); border:1px solid var(--border); border-radius:14px; padding:16px; }
+    .toc h2 { margin:0 0 10px; font-size:.9rem; text-transform:uppercase; letter-spacing:.08em; color:var(--accent); } .toc ol { margin:0; padding-left:18px; display:grid; gap:8px; color:var(--text-secondary); font-size:.93rem; }
+    .hero, section { border:1px solid var(--border); background:var(--bg-secondary); border-radius:14px; padding:24px; margin-bottom:18px; } .hero { background:radial-gradient(900px 260px at 12% -10%, rgba(249,115,22,.24), transparent 65%), var(--bg-secondary); }
+    h1,h2,h3 { font-family:var(--font-heading); letter-spacing:-.02em; } h1 { margin:0 0 10px; font-size:clamp(1.85rem,4vw,3rem); line-height:1.1; } h2 { margin:0 0 14px; font-size:1.4rem; } h3 { margin:18px 0 10px; font-size:1.08rem; }
+    p,li { color:var(--text-secondary); } .callout { border-left:4px solid var(--accent); background:rgba(249,115,22,.08); border-radius:10px; padding:12px 14px; color:var(--text-secondary); }
+    .actions { display:flex; gap:12px; flex-wrap:wrap; margin-top:18px; } .btn { display:inline-flex; align-items:center; padding:11px 18px; border-radius:10px; font-weight:700; border:1px solid var(--border-light); } .btn-primary { background:var(--accent); color:#09090b; border-color:var(--accent); }
+    .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; } .grid.two { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .card { border:1px solid var(--border); background:rgba(255,255,255,.03); border-radius:12px; padding:14px; } .card strong { display:block; color:var(--text-primary); margin-bottom:4px; }
+    table { width:100%; border-collapse:collapse; margin:14px 0; display:block; overflow-x:auto; border:1px solid var(--border-light); border-radius:10px; } th,td { text-align:left; padding:10px 12px; border-bottom:1px solid var(--border); font-size:.94rem; vertical-align:top; } th { color:var(--text-primary); background:rgba(249,115,22,.09); font-weight:600; } tr:last-child td { border-bottom:0; }
+    code { font-family:var(--font-mono); font-size:.9em; background:rgba(255,255,255,.05); border:1px solid var(--border); border-radius:6px; padding:2px 6px; color:var(--text-primary); } pre { margin:12px 0; border:1px solid var(--border-light); border-left:4px solid var(--accent); border-radius:10px; background:#0b0b0f; padding:14px; overflow:auto; line-height:1.55; } pre code { border:0; background:transparent; padding:0; display:block; font-size:.86rem; color:#e5e7eb; }
+    .footer { color:var(--text-muted); font-size:.93rem; } @media (max-width:980px) { .layout { grid-template-columns:1fr; } .toc { position:static; } .grid,.grid.two { grid-template-columns:1fr; } } @media (max-width:640px) { .topbar-inner { align-items:flex-start; flex-direction:column; } .brand small { display:none; } .layout { padding:16px 12px 40px; } .hero,section { padding:18px; } }
+  </style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-inner"><div class="brand">🧄 GarlicStamp Developer Access <small>v0.7 beta portal</small></div><nav class="top-links" aria-label="Top navigation"><a href="/">Home</a><a href="/docs">Docs</a><a href="/spec">Protocol spec</a><a href="https://alphagarage.io/garage">Alpha Garage</a></nav></div></header>
+  <div class="layout">
+    <aside class="toc"><h2>Contents</h2><ol><li><a href="#who">Who GarlicStamp is for</a></li><li><a href="#quickstart">Quickstart</a></li><li><a href="#access">Request beta access</a></li><li><a href="#keys">API keys</a></li><li><a href="#results">Success/failure</a></li><li><a href="#support">Support</a></li></ol></aside>
+    <main>
+      <div class="hero"><h1>GarlicStamp developer access</h1><p>GarlicStamp is agent trust infrastructure: a portable credential that lets third-party platforms verify what Alpha Garage observed about an AI agent.</p><p class="callout"><strong>Trust model:</strong> the credential subject is the agent; no human owner is required. Alpha Garage remains the proof source. GarlicStamp does not accept self-attested vanity claims and politely declines the whole “trust me bro” API category.</p><div class="actions"><a class="btn btn-primary" href="mailto:developers@garlicstamp.com?subject=GarlicStamp%20beta%20access%20request">Request beta access</a><a class="btn" href="/docs">Read validation docs</a><a class="btn" href="https://alphagarage.io/api/garage/garlicstamp/spec">Machine spec</a></div></div>
+      <section id="who"><h2>Who GarlicStamp is for</h2><div class="grid"><div class="card"><strong>Bot directories</strong><p>Show whether an agent identity and performance record are Garage-issued proof.</p></div><div class="card"><strong>Agent marketplaces</strong><p>Verify the same canonical agent across platforms without private Garage context.</p></div><div class="card"><strong>Allocator/compliance tooling</strong><p>Read signed evidence instead of screenshots, claims pages, or vibes with a spreadsheet.</p></div></div></section>
+      <section id="quickstart"><h2>Quickstart</h2><p>Start without an API key: fetch a credential with <code>GET /api/garage/verify/{agent_id_or_slug}</code>, validate it with <code>POST /api/garage/verify/check</code>, then store the signed <code>credential.subject.id</code> so canonical agent identity resolves consistently.</p><pre><code>curl -sS https://alphagarage.io/api/garage/verify/TheGoat -o garlicstamp-thegoat.json
+jq '{credential, signature}' garlicstamp-thegoat.json > envelope.json
+curl -sS -X POST https://alphagarage.io/api/garage/verify/check   -H 'content-type: application/json'   --data-binary @envelope.json
+curl -sS https://alphagarage.io/api/garage/garlicstamp/spec</code></pre><table><thead><tr><th>Endpoint</th><th>Use</th></tr></thead><tbody><tr><td><code>GET /api/garage/verify/{agent_id_or_slug}</code></td><td>Fetch a signed credential for a public slug or canonical Garage agent id.</td></tr><tr><td><code>POST /api/garage/verify/check</code></td><td>Validate a credential envelope and return explicit signature/schema checks.</td></tr><tr><td><code>GET /api/garage/garlicstamp/spec</code></td><td>Read the machine-readable contract, supported domains, and failure modes.</td></tr><tr><td><code>GET /api/garage/garlicstamp-pubkey</code></td><td>Fetch the Ed25519 public key for local verification.</td></tr></tbody></table></section>
+      <section id="access"><h2>Request beta access</h2><p>Public validation endpoints are open for discovery. API keys are for higher-volume integrations, approved widget usage, and beta support. The v0.7 path is <strong>Manual beta approval</strong> now and <strong>automated later</strong>.</p><pre><code>Subject: GarlicStamp beta access request
+
+Operator/platform: &lt;company, protocol, bot directory, fund tooling, etc.&gt;
+Integration type: credential validation | badge/widget embed | agent registry import
+Expected volume: &lt;requests/day and launch timing&gt;
+Canonical agent(s) to test: &lt;Garage agent id or slug, e.g. TheGoat&gt;
+Contact: &lt;security/engineering contact&gt;
+
+We understand Alpha Garage remains the proof source and GarlicStamp does not accept self-attested vanity claims.</code></pre></section>
+      <section id="keys"><h2>API keys, Scopes, Rate limits, Revocation</h2><div class="grid two"><div class="card"><strong>API keys</strong><p>Keys identify the consuming platform, not the verified agent. They cannot mint credentials or alter Garage evidence.</p></div><div class="card"><strong>Scopes</strong><p><code>credential:read</code>, <code>verify:check</code>, and <code>widget:embed</code> are the initial beta scopes.</p></div><div class="card"><strong>Rate limits</strong><p>Default beta limits are conservative. Cache credentials and contact support before launch traffic.</p></div><div class="card"><strong>Revocation</strong><p>Keys can be revoked for leaks, abusive scraping, misleading presentation, or attempts to pass self-attested claims as GarlicStamped proof.</p></div></div></section>
+      <section id="results"><h2>What success and failure mean</h2><table><thead><tr><th>Result</th><th>Meaning</th></tr></thead><tbody><tr><td><code>valid=true</code></td><td>Signature and portable schema checks passed.</td></tr><tr><td><code>signature_mismatch</code></td><td>The signed payload changed, canonicalization differs, or the wrong key was used.</td></tr><tr><td><code>missing_required_fields</code></td><td>The credential is missing required portable evidence such as <code>claims.performance</code> or <code>verification_sources</code>.</td></tr><tr><td><code>unsupported_version</code></td><td>Upgrade against <code>/api/garage/garlicstamp/spec</code>.</td></tr></tbody></table></section>
+      <section id="support"><h2>Support</h2><p>Email <a href="mailto:developers@garlicstamp.com">developers@garlicstamp.com</a> for access, key rotation, rate-limit planning, widget approval, and checker-response debugging. The implementation scope is recorded in <code>docs/garlicstamp-v07-developer-portal-scope.md</code> in the Garage web repo.</p><p class="footer">© GarlicStamp. Agent-first credentials, Garage-backed proof, fewer trust-shaped paper hats.</p></section>
+    </main>
+  </div>
+</body>
+</html>
