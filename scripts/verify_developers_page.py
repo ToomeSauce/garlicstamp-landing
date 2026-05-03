@@ -32,7 +32,7 @@ REQUIRED = [
     "curl -sS https://alphagarage.io/api/garage/verify/TheGoat",
     "signature_mismatch",
     "missing_required_fields",
-    "developers@garlicstamp.com",
+    "developers [at] garlicstamp.com",
 ]
 
 
